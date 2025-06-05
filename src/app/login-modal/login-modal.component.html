@@ -2,14 +2,32 @@
   <div class="modal-box w-11/12 max-w-5xl h-11/12">
     <h3 class="font-bold text-lg">Login</h3>
 
-    <form class="form-control space-y-4 mt-4">
-      <input type="text" placeholder="Username" class="input input-bordered w-full" />
-      <input type="text" placeholder="Mitarbeiter Nummer" class="input input-bordered w-full">
-      <input type="password" placeholder="Password" class="input input-bordered w-full" />
+    <form class="form-control space-y-4 mt-4" (ngSubmit)="login()" #loginForm="ngForm">
+      <input
+        type="text"
+        name="mnr"
+        [(ngModel)]="formData.mnr"
+        placeholder="Mitarbeiter Nummer"
+        class="input input-bordered w-full"
+        required
+      />
 
-      <div class="modal-action">
-        <button type="forgorr" class="btn btn-warning" (click)="forgotPassword()">Passwort vergessen</button>
-        <app-password-forgor-modal *ngIf="isPasswordForgorrModalOpen" (close)="isPasswordForgorrModalOpen = false"></app-password-forgor-modal>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="formData.password"
+        placeholder="Password"
+        class="input input-bordered w-full"
+        required
+      />
+      
+      <div class="modal-action flex flex-wrap gap-2">
+        <button type="button" class="btn btn-warning" (click)="forgotPassword()">Passwort vergessen</button>
+
+        @if (isPasswordForgorrModalOpen) {
+          <app-password-forgor-modal (close)="isPasswordForgorrModalOpen = false"></app-password-forgor-modal>
+        }
+
         <button type="submit" class="btn btn-primary">Login</button>
         <button type="button" class="btn" (click)="closeModal()">Cancel</button>
       </div>

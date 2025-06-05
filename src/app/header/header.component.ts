@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, LoginModalComponent, RegisterModalComponent],
+  imports: [LoginModalComponent, RegisterModalComponent],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {

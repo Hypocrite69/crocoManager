@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PasswordForgorModalComponent } from '../password-forgor-modal/password-forgor-modal.component';
+import { SupabaseService } from '../supabase.service';
 
 @Component({
   selector: 'app-login-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, PasswordForgorModalComponent],
+  imports: [FormsModule, PasswordForgorModalComponent],
   templateUrl: './login-modal.component.html',
 })
 export class LoginModalComponent {
@@ -14,11 +14,31 @@ export class LoginModalComponent {
 
   isPasswordForgorrModalOpen = false;
 
+  formData = {
+    mnr: '',
+    password: ''
+  };
+
+  constructor(private supabase: SupabaseService) {}
+
   closeModal() {
     this.close.emit();
   }
 
   forgotPassword() {
     this.isPasswordForgorrModalOpen = true;
+  }
+
+  async login() {
+    const { mnr, password } = this.formData;
+
+    const isValid = await this.supabase.checkPassword(mnr, password);
+
+    if (isValid) {
+      console.log('Login erfolgreich!');
+      this.closeModal();
+    } else {
+      alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Zugangsdaten.');
+    }
   }
 }

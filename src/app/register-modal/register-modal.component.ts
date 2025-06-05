@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule, NgForm } from '@angular/forms';
 import { CreateUserModalComponent } from '../create-user-modal/create-user-modal.component';
 
 @Component({
   selector: 'app-register-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CreateUserModalComponent],
+  imports: [FormsModule, CreateUserModalComponent],
   templateUrl: './register-modal.component.html',
   styleUrl: './register-modal.component.css'
 })
