@@ -33,6 +33,21 @@ export class SupabaseService {
     return data === true;
   }
 
+  async getMitarbeiterByMnr(mnr: string): Promise<{ Vorname: string; Name: string } | null> {
+  const { data, error } = await this.supabase
+    .from('public.mitarbeiter')
+    .select('Vorname, Name')
+    .eq('mnr', mnr)
+    .single();
+
+  if (error) {
+    console.error('Fehler beim Laden der Mitarbeiterdaten:', error);
+    return null;
+  }
+
+  return data;
+}
+
   async getUsers() {
     const { data, error } = await this.supabase.from('users').select('*');
     if (error) throw error;

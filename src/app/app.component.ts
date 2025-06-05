@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
   imports: [HeaderComponent, FormsModule],
   templateUrl: './app.component.html',
 })
+
+
 export class AppComponent {
   cards = [
     {

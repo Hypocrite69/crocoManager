@@ -1,3 +1,4 @@
+<!-- LOGIN MODAL -->
 <div class="modal modal-open">
   <div class="modal-box w-11/12 max-w-5xl h-11/12">
     <h3 class="font-bold text-lg">Login</h3>
@@ -20,13 +21,14 @@
         class="input input-bordered w-full"
         required
       />
-      
+
       <div class="modal-action flex flex-wrap gap-2">
         <button type="button" class="btn btn-warning" (click)="forgotPassword()">Passwort vergessen</button>
 
-        @if (isPasswordForgorrModalOpen) {
-          <app-password-forgor-modal (close)="isPasswordForgorrModalOpen = false"></app-password-forgor-modal>
-        }
+        <app-password-forgor-modal
+          *ngIf="isPasswordForgorrModalOpen"
+          (close)="isPasswordForgorrModalOpen = false"
+        ></app-password-forgor-modal>
 
         <button type="submit" class="btn btn-primary">Login</button>
         <button type="button" class="btn" (click)="closeModal()">Cancel</button>
@@ -34,3 +36,11 @@
     </form>
   </div>
 </div>
+
+<!-- USER-MODAL – wird genau EINMAL angezeigt -->
+<app-fuckass-user-modal
+  *ngIf="isFuckassUserModalOpen"
+  [mnr]="loggedInMnr"
+  [name]="loggedInName"
+  (close)="onNextModalClose()"
+></app-fuckass-user-modal>
