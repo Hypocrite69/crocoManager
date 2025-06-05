@@ -1,0 +1,51 @@
+<div class="modal modal-open">
+  <div class="modal-box w-11/12 max-w-5xl h-full">
+    <h2 class="font-bold text-lg">Hallo PLACE HOLDER!</h2>
+
+    <h3 class="font-bold text-lg mt-4">Benutzerdaten Eingeben</h3>
+
+    <form class="form-control space-y-4 mt-4">
+      <input type="text" placeholder="Straße" class="input input-bordered w-full" />
+      <input type="text" placeholder="PLZ" class="input input-bordered w-full" />
+      <input type="text" placeholder="Ort" class="input input-bordered w-full" />
+      <input type="text" placeholder="Telefon" class="input input-bordered w-full" />
+
+      <!-- Geschlecht Auswahl -->
+      <label class="label">
+        <span class="label-text">Geschlecht</span>
+      </label>
+      <select class="select select-bordered w-full" [(ngModel)]="selectedGender" name="gender">
+        <option [ngValue]="null" disabled selected>Bitte wählen</option>
+        <option value="Männlich">Männlich</option>
+        <option value="Weiblich">Weiblich</option>
+        <option value="Divers">Divers</option>
+      </select>
+
+      <input type="text" placeholder="KFZ 1" class="input input-bordered w-full" />
+      <input type="text" placeholder="KFZ 2" class="input input-bordered w-full" />
+
+      <!-- Abteilung Auswahl -->
+      <label class="label">
+        <span class="label-text">Abteilung</span>
+      </label>
+      <select class="select select-bordered w-full" [(ngModel)]="selectedDepartment" name="department">
+        <option [ngValue]="null" disabled selected>Bitte wählen</option>
+        <option value="Lager">Lager</option>
+        <option value="Vertrieb">Vertrieb</option>
+        <option value="Opfer">Opfer</option>
+      </select>
+
+      <!-- Anzeige der Auswahl -->
+      <div>
+        <p><strong>Ausgewähltes Geschlecht:</strong> {{ selectedGender || '–' }}</p>
+        <p><strong>Ausgewählte Abteilung:</strong> {{ selectedDepartment || '–' }}</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="modal-action">
+        <button type="submit" class="btn btn-primary">Fertig</button>
+        <button type="button" class="btn" (click)="closeModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

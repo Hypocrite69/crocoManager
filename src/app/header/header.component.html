@@ -1,0 +1,12 @@
+<header class="navbar bg-base-200 shadow-md px-4">
+  <div class="flex-1">
+    <a class="text-xl font-bold">CrocoManager</a>
+  </div>
+  <div class="flex-none">
+    <!-- Login Button -->
+    <button class="btn btn-primary" (click)="openLoginModal()">Login</button>
+    <button class="btn btn-primary" (click)="openRegisterModal()">Register</button>
+  </div>
+</header>
+<app-login-modal *ngIf="isLoginModalOpen" (close)="isLoginModalOpen = false"></app-login-modal>
+<app-register-modal *ngIf="isRegisterModalOpen" (close)="isRegisterModalOpen = false"></app-register-modal>

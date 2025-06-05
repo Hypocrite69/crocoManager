@@ -1,0 +1,73 @@
+<div class="modal modal-open">
+  <div class="modal-box w-11/12 max-w-5xl h-11/12">
+    <h3 class="font-bold text-lg">Register</h3>
+
+    <form 
+  #registerForm="ngForm" 
+  (ngSubmit)="onSubmit(registerForm)" 
+  class="form-control space-y-4 mt-4"
+  novalidate
+>
+
+      <!-- Name -->
+      <input 
+        type="text" 
+        placeholder="Name" 
+        class="input input-bordered w-full"
+        name="firstName"
+        [(ngModel)]="formData.firstName"
+        required
+      />
+
+      <!-- Nachname -->
+      <input 
+        type="text" 
+        placeholder="Nachname" 
+        class="input input-bordered w-full"
+        name="lastName"
+        [(ngModel)]="formData.lastName"
+        required
+      />
+
+      <!-- Passwort -->
+      <input 
+        type="password" 
+        placeholder="Passwort" 
+        class="input input-bordered w-full"
+        name="password"
+        [(ngModel)]="formData.password"
+        minlength="8"
+        required
+      />
+
+      <!-- Passwort bestätigen -->
+      <input 
+        type="password" 
+        placeholder="Passwort bestätigen" 
+        class="input input-bordered w-full"
+        name="confirmPassword"
+        [(ngModel)]="formData.confirmPassword"
+        required
+      />
+
+      <!-- Fehleranzeige -->
+      <div class="text-red-500 text-sm" *ngIf="passwordsDoNotMatch()">
+        Passwörter stimmen nicht überein
+      </div>
+
+      <!-- Submit- und Cancel-Buttons -->
+      <div class="modal-action">
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="registerForm.invalid || passwordsDoNotMatch()"
+        >
+          Register
+        </button>
+
+        <button type="button" class="btn" (click)="closeModal()">Cancel</button>
+        <app-create-user-modal *ngIf="isCreateUserModalOpen" (close)="isCreateUserModalOpen = false"></app-create-user-modal>
+      </div>
+    </form>
+  </div>
+</div>
