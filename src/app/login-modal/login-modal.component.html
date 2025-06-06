@@ -23,7 +23,7 @@
       />
 
       <div class="modal-action flex flex-wrap gap-2">
-        <button type="button" class="btn btn-warning" (click)="forgotPassword()">Passwort vergessen</button>
+        <button type="button" class="btn btn-warning" (click)="forgotPassword()">Passwort zurücksetzen</button>
 
         <app-password-forgor-modal
           *ngIf="isPasswordForgorrModalOpen"
@@ -41,6 +41,6 @@
 <app-fuckass-user-modal
   *ngIf="isFuckassUserModalOpen"
   [mnr]="loggedInMnr"
-  [name]="loggedInName"
+  [user]="loggedInUser"
   (close)="onNextModalClose()"
 ></app-fuckass-user-modal>

@@ -18,7 +18,7 @@ export class LoginModalComponent {
   isFuckassUserModalOpen = false;
 
   loggedInMnr: string = '';
-  loggedInName: string = '';
+  loggedInUser: string = '';
 
   formData = {
     mnr: '',
@@ -44,21 +44,26 @@ export class LoginModalComponent {
 }
 
   async login() {
-    const { mnr, password } = this.formData;
+  const { mnr, password } = this.formData;
 
-    const isValid = await this.supabase.checkPassword(mnr, password);
+  const isValid = await this.supabase.checkPassword(mnr, password);
 
-    if (isValid) {
-      this.loggedInMnr = mnr;
+  if (isValid) {
+    this.loggedInMnr = mnr;
 
-      const mitarbeiter = await this.supabase.getMitarbeiterByMnr(mnr);
-      if (mitarbeiter) {
-        this.loggedInName = `${mitarbeiter.Vorname} ${mitarbeiter.Name}`;
+    try {
+      const user = await this.supabase.getMitarbeiterByMnr(mnr);
+      if (user) {
+        this.loggedInUser = `${user.Vorname} ${user.Name}`;
       } else {
-        this.loggedInName = 'Unbekannt';
+        this.loggedInUser = 'Unbekannt';
       }
+    } catch (err) {
+      console.error('Fehler beim Benutzerabruf:', err);
+      this.loggedInUser = 'Unbekannt';
+    }
 
-      this.isFuckassUserModalOpen = true;
+    this.isFuckassUserModalOpen = true;
     } else {
       alert('Login fehlgeschlagen. Bitte überprüfen Sie Ihre Zugangsdaten.');
     }

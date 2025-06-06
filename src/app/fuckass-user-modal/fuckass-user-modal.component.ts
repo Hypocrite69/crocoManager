@@ -8,7 +8,7 @@ import { Component, Input, Output, EventEmitter, input } from '@angular/core';
 })
 export class FuckassUserModalComponent {
   @Input() mnr: string = '';
-  @Input() name: string = '';
+  @Input() user: string = '';
   @Output() close = new EventEmitter<void>();
 
   closeModal() {
