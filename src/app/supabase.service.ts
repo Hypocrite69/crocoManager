@@ -24,7 +24,7 @@ export class SupabaseService {
     return this.supabase.auth;
   }
 
-  // ✅ Passwort-Prüfung per Stored Procedure
+  //Passwort-Prüfung per Stored Procedure
   async checkPassword(p_mnr: string, p_plain_pw: string): Promise<boolean> {
     const { data, error } = await this.supabase.rpc('correctpassword', {
       p_mnr,
@@ -39,40 +39,36 @@ export class SupabaseService {
     return data === true;
   }
 
-  // ✅ Mitarbeiterdaten abrufen (Vorname & Nachname)
-async getMitarbeiterByMnr(mnr: string): Promise<{ Vorname: string; Name: string }> {
-  const { data, error } = await this.supabase
-    .from('mitarbeiter')
-    .select('Vorname, Name')
-    .eq('"MNr"', mnr)
-    .single();
-
-  if (error || !data) {
-    throw new Error('Benutzer nicht gefunden');
-  }
-  return data;
-}
-
-
-  // 🔧 Beispiele für User-Tabelle
-  async getUsers() {
-    const { data, error } = await this.supabase.from('users').select('*');
-    if (error) throw error;
-    return data;
-  }
-
-  async createUser(user: { name: string; password: string }) {
-    const { data, error } = await this.supabase.from('users').insert([user]);
-    if (error) throw error;
-    return data;
-  }
-
-  async updatePassword(userId: number, newPassword: string) {
+  //Mitarbeiterdaten abrufen (Vorname & Nachname)
+  async getMitarbeiterByMnr(mnr: string): Promise<{ Vorname: string; Name: string }> {
     const { data, error } = await this.supabase
-      .from('users')
-      .update({ password: newPassword })
-      .eq('id', userId);
-    if (error) throw error;
+      .from('mitarbeiter')
+      .select('Vorname, Name')
+      .eq('"MNr"', mnr)
+      .single();
+
+    if (error || !data) {
+      throw new Error('Benutzer nicht gefunden');
+    }
     return data;
   }
+
+async updatePassword(
+  p_mnr: number,
+  p_old_pw: string,
+  p_new_pw: string
+): Promise<boolean> {
+  const { data, error } = await this.supabase.rpc('change_password', {
+    p_mnr,
+    p_old_pw,
+    p_new_pw
+  });
+ 
+  if (error) {
+    console.error('Fehler beim Passwortwechsel:', error.message);
+    return false;
+  }
+ 
+  return true;
+}
 }

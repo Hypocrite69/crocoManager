@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
+import { SupabaseService } from '../supabase.service';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
@@ -25,12 +25,13 @@ export class PasswordForgorModalComponent {
 
   // Neues Passwort darf nicht gleich dem alten sein
   newPasswordEqualsOld(): boolean {
+    if (!this.formData.oldPassword) return false; // ← Neuer Teil!
     return (
-      !!this.formData.oldPassword &&
       !!this.formData.newPassword &&
       this.formData.oldPassword === this.formData.newPassword
     );
   }
+
 
   // Neue Passwörter müssen übereinstimmen
   newPasswordsDoNotMatch(): boolean {
@@ -49,17 +50,35 @@ export class PasswordForgorModalComponent {
     );
   }
 
-  onSubmit(form: NgForm) {
-    if (
-      form.invalid ||
-      this.newPasswordEqualsOld() ||
-      this.newPasswordsDoNotMatch() ||
-      this.newPasswordTooShort()
-    ) {
-      return;
-    }
-
-    console.log('Passwort wird geändert:', this.formData);
-    this.closeModal();
+  async onSubmit(form: NgForm) {
+  if (
+    form.invalid ||
+    this.newPasswordsDoNotMatch() ||
+    this.newPasswordTooShort()
+  ) {
+    alert('Bitte überprüfe deine Eingaben.');
+    return;
   }
+
+  const { employeeId, oldPassword, newPassword } = this.formData;
+
+  try {
+    const success = await this.supabase.updatePassword(
+      parseInt(employeeId, 10),
+      oldPassword || '', // leeres Passwort erlauben
+      newPassword
+    );
+
+      if (success) {
+        alert('Passwort wurde erfolgreich geändert.');
+        this.closeModal();
+      } else {
+        alert('Änderung fehlgeschlagen. Passwort evtl. falsch.');
+      }
+    } catch (error: any) {
+      console.error('Fehler beim Passwort ändern:', error.message);
+      alert('Ein Fehler ist aufgetreten.');
+    }
+  }
+  constructor(private supabase: SupabaseService) {}
 }
