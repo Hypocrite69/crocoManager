@@ -1,13 +1,15 @@
 {
   "name": "db-user-management",
   "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+  "main": "dist-electron/main.js",
+"scripts": {
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "electron": "tsc -p electron/tsconfig.electron.json && ng build --base-href ./ && electron ."
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "^20.0.1",
@@ -32,6 +34,7 @@
     "@angular/cli": "^20.0.1",
     "@angular/compiler-cli": "^20.0.1",
     "@types/jasmine": "~5.1.0",
+    "electron": "^36.4.0",
     "jasmine-core": "~5.4.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
