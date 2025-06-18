@@ -43,10 +43,12 @@ function createWindow() {
         webPreferences: {
             contextIsolation: true,
             nodeIntegration: false,
+            sandbox: false,
         },
     });
     // Adjust the path to match your Angular build output
-    win.loadFile(path.join(__dirname, '../dist/db-user-management/browser/index.html'));
+     win.loadFile(path.join(__dirname, '../dist/browser/index.html'));
+
 }
 electron_1.app.whenReady().then(createWindow);
 //# sourceMappingURL=main.js.map
